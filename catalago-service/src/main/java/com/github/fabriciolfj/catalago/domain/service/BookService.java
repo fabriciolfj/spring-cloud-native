@@ -21,11 +21,11 @@ public class BookService {
     }
 
     public Book viewBookDetails(final String isbn) {
-        return repository.findById(isbn).orElseThrow(() -> new BookNotFoundException(isbn));
+        return repository.findByIsbn(isbn).orElseThrow(() -> new BookNotFoundException(isbn));
     }
 
     public Book addBookToCatalog(final Book book) {
-        if (repository.findById(book.getIsbn()).isPresent()) {
+        if (repository.existsByIsbn(book.getIsbn())) {
             throw new BookAlreadyExistsException(book.getIsbn());
         }
 
@@ -33,18 +33,17 @@ public class BookService {
     }
 
     public void removeBookFromCatalog(final String isbn) {
-        repository.findById(isbn)
-                .map(book -> {
-                    repository.delete(book);
-                    return book;
-                })
-                .orElseThrow(() -> new BookNotFoundException(isbn));
+        try {
+            repository.deleteByIsbn(isbn);
+        } catch (Exception e) {
+            new BookNotFoundException(isbn);
+        }
     }
 
     public Book editBookDetails(final String isbn, final Book book) {
-        return repository.findById(isbn)
+        return repository.findByIsbn(isbn)
                 .map(bookEntity -> {
-                    BeanUtils.copyProperties(book, bookEntity, "isbn");
+                    BeanUtils.copyProperties(book, bookEntity, "id");
                     return repository.save(bookEntity);
                 }).orElseThrow(() -> new BookNotFoundException(isbn));
     }

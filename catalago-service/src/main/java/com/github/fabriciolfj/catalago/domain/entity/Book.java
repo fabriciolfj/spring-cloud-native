@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 import java.time.Year;
 
 @Data
@@ -18,18 +19,24 @@ import java.time.Year;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Book {
+@EqualsAndHashCode(callSuper = true)
+public class Book extends PersistableEntity{
 
-    @Id
     @NotBlank(message = "The book ISBN must be define.")
     @Pattern(regexp = "^(97([89]))?\\d{9}(\\d|X)$", message = "The ISBN formt must follow the standards ISBN-10 or ISBN-13")
-    @EqualsAndHashCode.Include
     private String isbn;
     @NotBlank(message = "The book title must be defined.")
     private String title;
     @NotBlank(message = "The book author must be defined")
     private String author;
     @PastOrPresent(message = "The book cannot have been published in the future.")
+    @Column(name = "publishing_year")
     private Year publishingYear;
+    private BigDecimal price;
+    @CreatedDate
+    private Long createdDate;
+    @LastModifiedDate
+    private Long lastModifiedDate;
+    @Version
+    private int version;
 }
