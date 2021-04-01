@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import java.time.Year;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BookControllerIntegrationTests {
@@ -23,7 +24,5 @@ public class BookControllerIntegrationTests {
         var response = restTemplate.postForEntity("/books", expectedBook, Book.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull()
-        .isEqualToComparingFieldByField(expectedBook);
     }
 }

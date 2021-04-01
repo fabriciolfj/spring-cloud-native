@@ -39,4 +39,6 @@ public class Book extends PersistableEntity{
     private Long lastModifiedDate;
     @Version
     private int version;
+
+    private String publisher;
 }

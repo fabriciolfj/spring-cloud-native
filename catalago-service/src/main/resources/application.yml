@@ -20,8 +20,8 @@ spring:
     password: admin
   jpa:
     hibernate:
-      dialect:
-      ddl-auto: 'create-drop'
+      dialect: org.hibernate.dialect.Dialect
+      ddl-auto: validate
     show-sql: true
 
 

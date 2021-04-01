@@ -15,11 +15,11 @@ spring:
       idle-timeout: 10000 #tempo limite de ociosidade das conexoes excedentes, ou seja, 5 - 3 = 2, se essas 2 nao serem usadas em 10 seg, seram fechadas
       connection-timeout: 5000
       pool-name: polardb-catalog-pool
-    url: jdbc:postgresql:13:///
+    url: jdbc:tc:postgresql:13:///
   jpa:
     hibernate:
-      dialect:
-      ddl-auto: 'create-drop'
+      dialect: org.hibernate.dialect.Dialect
+      ddl-auto: validate
     show-sql: true
   profiles:
     active: default

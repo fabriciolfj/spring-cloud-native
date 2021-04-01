@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.math.BigDecimal;
 import java.time.Year;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +24,7 @@ public class BookValidationTest {
 
     @Test
     void whenAllFieldsCorrectThenValidationSucceeds() {
-        var book = new Book("1234567890", "Title", "Author", Year.of(2000));
+        var book = new Book("1234567890", "Title", "Author", Year.of(2000), BigDecimal.ZERO, null, null, 0);
         var violations = validator.validate(book);
 
         assertThat(violations).isEmpty();
@@ -31,7 +32,7 @@ public class BookValidationTest {
 
     @Test
     void whenIsbnDefineButIncorrectThenValidationFails() {
-        var book = new Book("a234567890", "Title", "Author", Year.of(2000));
+        var book = new Book("a234567890", "Title", "Author", Year.of(2000), BigDecimal.ZERO, null, null, 0);
         var violations = validator.validate(book);
 
         assertThat(violations).hasSize(1);

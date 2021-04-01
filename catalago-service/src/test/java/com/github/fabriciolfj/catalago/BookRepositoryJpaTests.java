@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Import;
 import java.math.BigDecimal;
 import java.time.Year;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DataJpaTest
 @Import(JpaConfig.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -33,6 +35,6 @@ public class BookRepositoryJpaTests {
 
         var actualBook = bookRepository.findByIsbn(bookIsbn);
 
-        assertTrue(expectedBook.getIsbn().equals(actualBook.get().getIsbn()));
+        assertThat(actualBook.get().getIsbn().equals(expectedBook.getIsbn()));
     }
 }
