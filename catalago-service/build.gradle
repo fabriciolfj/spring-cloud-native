@@ -36,3 +36,8 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+bootBuildImage {
+	imageName = "fabricio211/${project.name}:${project.version}"
+	environment = ["BP_JVM_VERSION" : "11.*"]
+}
